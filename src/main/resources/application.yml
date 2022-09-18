@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql-product:3306/bezkoder_db
+    url: jdbc:mysql://mysqldb-product:3306/bezkoder_db
     username: root
     password: 123456
 
@@ -15,5 +15,18 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+
+routing-key:
+  product: product_key
+
+queue:
+  product: product_queue
+
+xchange:
+  name: exchange_rpc
+
 server:
-  port: 8082
+  port: 8083
