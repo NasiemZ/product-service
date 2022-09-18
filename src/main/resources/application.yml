@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3309/bezkoder_db
+    url: jdbc:mysql://mysql-product:3306/bezkoder_db
     username: root
     password: 123456
 
