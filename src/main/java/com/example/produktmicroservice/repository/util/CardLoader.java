@@ -17,7 +17,7 @@ import java.util.List;
 public class CardLoader {
 
 
-    private final WebClient webClient = WebClient.create("http://localhost:8081/warehouse/");
+    private final WebClient webClient = WebClient.create("http://warehouse:8081/warehouse/");
     private final PokemonCardImporter pokemonCardImporter = new PokemonCardImporter();
 
     private final PokemonCardDeckImporter pokemonCardDeckImporter = new PokemonCardDeckImporter();
