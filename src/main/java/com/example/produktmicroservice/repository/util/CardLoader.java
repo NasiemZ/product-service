@@ -1,7 +1,7 @@
 package com.example.produktmicroservice.repository.util;
 
-import com.example.produktmicroservice.Entity.PokemonCard;
-import com.example.produktmicroservice.Entity.PokemonCardDeck;
+import com.example.produktmicroservice.repository.jpa.PokemonCard;
+import com.example.produktmicroservice.repository.jpa.PokemonCardDeck;
 import com.example.produktmicroservice.repository.PokemonCardDeckRepository;
 import com.example.produktmicroservice.repository.PokemonCardRepository;
 import lombok.extern.slf4j.Slf4j;
