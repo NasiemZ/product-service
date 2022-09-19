@@ -23,7 +23,7 @@ public class CardLoader {
     private final PokemonCardDeckImporter pokemonCardDeckImporter = new PokemonCardDeckImporter();
 
     @Bean
-    CommandLineRunner yikes (PokemonCardRepository cardRepository, PokemonCardDeckRepository cardDeckRepository ){
+    CommandLineRunner commandLineRunner (PokemonCardRepository cardRepository, PokemonCardDeckRepository cardDeckRepository ){
         return args -> {
             List<PokemonCard> pokemonCardList = pokemonCardImporter.GetListonAllPokemonCards(webClient);
             cardRepository.saveAll(pokemonCardList);

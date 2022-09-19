@@ -22,8 +22,7 @@ public class RequestHandler {
                 return new Gson().toJson(productService.getPokemonCardList());
             }
             case GET_DECKS -> {
-                String test = new Gson().toJson(productService.getPokemonCardDeckList());
-                return test;
+                return new Gson().toJson(productService.getPokemonCardDeckList());
             }
             default -> {
                 return "Error: Product Service Request Handler";
