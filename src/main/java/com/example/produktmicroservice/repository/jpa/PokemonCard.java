@@ -1,4 +1,4 @@
-package com.example.produktmicroservice.Entity;
+package com.example.produktmicroservice.repository.jpa;
 
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,7 +21,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "pokemon")
 @JsonPropertyOrder({"id", "name", "description", "hp", "type", "stage", "expansion", "rarity", "number", "illustrator", "price"})
-//ID,Name,Description,HP,Type,Stage,Expansion,Rarity,Number,Illustrator,Price
 public class PokemonCard {
     @Id
     @Column(name = "id", nullable = false)

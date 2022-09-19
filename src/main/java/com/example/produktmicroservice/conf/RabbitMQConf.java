@@ -1,4 +1,5 @@
 package com.example.produktmicroservice.conf;
+import com.example.produktmicroservice.Service.ProductService;
 import com.example.produktmicroservice.request.RequestHandler;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

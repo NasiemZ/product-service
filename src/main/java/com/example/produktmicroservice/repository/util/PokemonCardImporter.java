@@ -1,6 +1,6 @@
 package com.example.produktmicroservice.repository.util;
 
-import com.example.produktmicroservice.Entity.PokemonCard;
+import com.example.produktmicroservice.repository.jpa.PokemonCard;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;

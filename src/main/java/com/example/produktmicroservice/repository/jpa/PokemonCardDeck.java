@@ -1,4 +1,4 @@
-package com.example.produktmicroservice.Entity;
+package com.example.produktmicroservice.repository.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +27,6 @@ public class PokemonCardDeck {
 
     @Column
     @OneToMany
-//    @JoinTable
+    @JoinTable
     private List<PokemonCard> pokemonCardList;
 }

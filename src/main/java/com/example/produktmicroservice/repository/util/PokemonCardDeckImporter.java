@@ -1,7 +1,7 @@
 package com.example.produktmicroservice.repository.util;
 
 
-import com.example.produktmicroservice.Entity.PokemonCardDeck;
+import com.example.produktmicroservice.repository.jpa.PokemonCardDeck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -10,8 +10,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-
-import java.util.List;
 @Slf4j
 public class PokemonCardDeckImporter {
     public List<PokemonCardDeck> GetListonAllPokemonCardDecks(WebClient client){
