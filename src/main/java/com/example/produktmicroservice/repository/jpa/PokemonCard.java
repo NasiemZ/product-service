@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -54,5 +55,5 @@ public class PokemonCard {
     private String illustrator;
 
     @Column
-    private String price;
+    private BigDecimal price;
 }

@@ -1,4 +1,4 @@
-package com.example.produktmicroservice.Service;
+package com.example.produktmicroservice.service;
 
 import com.example.produktmicroservice.repository.jpa.PokemonCard;
 import com.example.produktmicroservice.repository.jpa.PokemonCardDeck;

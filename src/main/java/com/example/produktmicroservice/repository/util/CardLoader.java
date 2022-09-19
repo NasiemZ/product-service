@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -25,12 +26,15 @@ public class CardLoader {
     @Bean
     CommandLineRunner commandLineRunner (PokemonCardRepository cardRepository, PokemonCardDeckRepository cardDeckRepository ){
         return args -> {
-            List<PokemonCard> pokemonCardList = pokemonCardImporter.GetListonAllPokemonCards(webClient);
-            cardRepository.saveAll(pokemonCardList);
+            try{
+                List<PokemonCard> pokemonCardList = pokemonCardImporter.GetListonAllPokemonCards(webClient);
+                cardRepository.saveAll(pokemonCardList);
 
-            List<PokemonCardDeck> pokemonCardDeckList = pokemonCardDeckImporter.GetListonAllPokemonCardDecks(webClient);
-            cardDeckRepository.saveAll(pokemonCardDeckList);
-
+                List<PokemonCardDeck> pokemonCardDeckList = pokemonCardDeckImporter.GetListonAllPokemonCardDecks(webClient);
+                cardDeckRepository.saveAll(pokemonCardDeckList);
+            }catch (DataIntegrityViolationException e){
+                log.error("Database already exists"+ e);
+            }
         };
     }
 

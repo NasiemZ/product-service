@@ -1,6 +1,6 @@
 package com.example.produktmicroservice.request;
 
-import com.example.produktmicroservice.Service.ProductService;
+import com.example.produktmicroservice.service.ProductService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
