@@ -14,6 +14,9 @@ spring:
       ddl-auto: update
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
 
   rabbitmq:
     host: rabbitmq
