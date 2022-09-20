@@ -1,6 +1,5 @@
-package com.example.produktmicroservice.conf;
-import com.example.produktmicroservice.Service.ProductService;
-import com.example.produktmicroservice.request.RequestHandler;
+package com.example.produktmicroservice.configuration;
+import com.example.produktmicroservice.consumer.ProductConsumer;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConf {
+public class RabbitMQConfiguration {
 
     @Value("${routing-key.product}")
     private String product_key;
@@ -21,8 +20,8 @@ public class RabbitMQConf {
 
 
     @Bean
-    public RequestHandler requestHandler() {
-        return new RequestHandler();
+    public ProductConsumer requestHandler() {
+        return new ProductConsumer();
     }
 
     @Bean

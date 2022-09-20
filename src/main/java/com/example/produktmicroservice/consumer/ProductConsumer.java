@@ -1,6 +1,6 @@
-package com.example.produktmicroservice.request;
+package com.example.produktmicroservice.consumer;
 
-import com.example.produktmicroservice.Service.ProductService;
+import com.example.produktmicroservice.service.ProductService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -8,7 +8,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
-public class RequestHandler {
+public class ProductConsumer {
 
     @Autowired
     private ProductService productService;
@@ -22,14 +22,12 @@ public class RequestHandler {
                 return new Gson().toJson(productService.getPokemonCardList());
             }
             case GET_DECKS -> {
-                String test = new Gson().toJson(productService.getPokemonCardDeckList());
-                return test;
+                return new Gson().toJson(productService.getPokemonCardDeckList());
             }
             default -> {
                 return "Error: Product Service Request Handler";
             }
         }
-
 
     }
 }
