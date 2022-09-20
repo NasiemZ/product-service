@@ -1,4 +1,4 @@
-package com.example.produktmicroservice.repository.jpa;
+package com.example.produktmicroservice.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

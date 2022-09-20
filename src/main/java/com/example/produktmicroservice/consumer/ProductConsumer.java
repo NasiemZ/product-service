@@ -1,4 +1,4 @@
-package com.example.produktmicroservice.request;
+package com.example.produktmicroservice.consumer;
 
 import com.example.produktmicroservice.service.ProductService;
 import com.google.gson.Gson;
@@ -8,7 +8,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
-public class RequestHandler {
+public class ProductConsumer {
 
     @Autowired
     private ProductService productService;
@@ -28,7 +28,6 @@ public class RequestHandler {
                 return "Error: Product Service Request Handler";
             }
         }
-
 
     }
 }
