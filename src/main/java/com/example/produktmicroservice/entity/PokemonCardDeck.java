@@ -26,7 +26,7 @@ public class PokemonCardDeck {
     private String name;
 
     @Column
-    @OneToMany
+    @ManyToMany
     @JoinTable
     private List<PokemonCard> pokemonCardList;
 }
