@@ -24,9 +24,11 @@ spring:
 
 routing-key:
   product: product_key
+  price: price_key
 
 queue:
   product: product_queue
+  price: price_queue
 
 xchange:
   name: exchange_rpc
