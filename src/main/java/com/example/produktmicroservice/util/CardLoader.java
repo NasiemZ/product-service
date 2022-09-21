@@ -1,8 +1,8 @@
 package com.example.produktmicroservice.util;
 
 import com.example.produktmicroservice.entity.PokemonCard;
-import com.example.produktmicroservice.entity.PokemonCardDeck;
-import com.example.produktmicroservice.repository.PokemonCardDeckRepository;
+import com.example.produktmicroservice.entity.PokemonDeck;
+import com.example.produktmicroservice.repository.PokemonDeckRepository;
 import com.example.produktmicroservice.repository.PokemonCardRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -18,20 +18,20 @@ import java.util.List;
 public class CardLoader {
 
 
-    private final WebClient webClient = WebClient.create("http://warehouse:8081/warehouse/");
+    private final WebClient webClient = WebClient.create("http://localhost:8081/warehouse/");
     private final PokemonCardImporter pokemonCardImporter = new PokemonCardImporter();
 
-    private final PokemonCardDeckImporter pokemonCardDeckImporter = new PokemonCardDeckImporter();
+    private final PokemonDeckImporter pokemonDeckImporter = new PokemonDeckImporter();
 
     @Bean
-    CommandLineRunner commandLineRunner (PokemonCardRepository cardRepository, PokemonCardDeckRepository cardDeckRepository ){
+    CommandLineRunner commandLineRunner (PokemonCardRepository cardRepository, PokemonDeckRepository cardDeckRepository ){
         return args -> {
             try{
                 List<PokemonCard> pokemonCardList = pokemonCardImporter.GetListonAllPokemonCards(webClient);
                 cardRepository.saveAll(pokemonCardList);
 
-                List<PokemonCardDeck> pokemonCardDeckList = pokemonCardDeckImporter.GetListonAllPokemonCardDecks(webClient);
-                cardDeckRepository.saveAll(pokemonCardDeckList);
+                List<PokemonDeck> pokemonDeckList = pokemonDeckImporter.GetListonAllPokemonDecks(webClient);
+                cardDeckRepository.saveAll(pokemonDeckList);
             }catch (DataIntegrityViolationException e){
                 log.error("Database already exists"+ e);
             }
