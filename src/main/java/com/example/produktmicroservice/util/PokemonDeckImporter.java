@@ -13,10 +13,8 @@ import java.util.List;
 @Slf4j
 public class PokemonDeckImporter {
     public List<PokemonDeck> GetListonAllPokemonDecks(WebClient client){
-        log.info("yes");
-        Mono<List<PokemonDeck>> response = client.get().uri("pokemon-deck")
+        Mono<List<PokemonDeck>> response = client.get().uri("pokemon-decks")
                 .accept(MediaType.ALL).retrieve().bodyToMono(new ParameterizedTypeReference<>() {});
-        log.info("yes2");
         return response.block();
     }
 }

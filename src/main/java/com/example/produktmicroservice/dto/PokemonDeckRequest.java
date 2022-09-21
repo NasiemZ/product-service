@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class PokemonDeckRequest {
-    private int id;
     private String name;
     private List<PokemonCardRequest> pokemonCardList;
 }

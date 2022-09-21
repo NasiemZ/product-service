@@ -11,10 +11,8 @@ import java.util.List;
 @Slf4j
 public class PokemonCardImporter {
     public List<PokemonCard> GetListonAllPokemonCards(WebClient client){
-        log.info("yes");
-        Mono<List<PokemonCard>> response = client.get().uri("pokemon-card")
+        Mono<List<PokemonCard>> response = client.get().uri("pokemon-cards")
                 .accept(MediaType.ALL).retrieve().bodyToMono(new ParameterizedTypeReference<>() {});
-        log.info("yes2");
         return response.block();
     }
 }
