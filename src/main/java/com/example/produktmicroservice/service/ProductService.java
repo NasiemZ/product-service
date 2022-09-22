@@ -30,11 +30,7 @@ public class ProductService {
     private PokemonDeckRepository cardDeckRepository;
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
-    @Autowired
-    private DirectExchange directExchange;
-    @Value("${routing-key.price}")
-    private String priceKey;
+    private PriceService priceService;
 
     public List<PokemonCard> getPokemonCardList() {
         return cardRepository.findAll();
@@ -50,18 +46,8 @@ public class ProductService {
         saveDeckToDatabase(deckRequest.getName(), cardRequests);
 
         List<PokemonCardResponse> cardResponses = getPokemonResponseList(cardRequests);
-        List<BigDecimal> priceList = cardResponses.stream().map(PokemonCardResponse::getPrice).toList();
 
-        PriceRequest priceRequest = new PriceRequest().setPriceList(priceList);
-
-        Message requestMessage = new Message((new Gson().toJson(priceRequest)).getBytes());
-        Message returnMessage = rabbitTemplate.sendAndReceive(directExchange.getName(), priceKey, requestMessage);
-
-        if (returnMessage == null) {
-            log.info("No Price Response");
-        }
-
-        PriceResponse priceResponse = new Gson().fromJson(new String(returnMessage.getBody(), StandardCharsets.UTF_8), PriceResponse.class);
+        PriceResponse priceResponse = priceService.getPrice(cardResponses);
 
         return new PokemonDeckResponse()
                 .setName(deckRequest.getName())
