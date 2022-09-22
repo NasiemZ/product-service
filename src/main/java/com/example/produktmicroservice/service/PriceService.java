@@ -28,9 +28,7 @@ public class PriceService {
     @Value("${routing-key.price}")
     private String priceKey;
 
-    protected PriceResponse getPrice(List<PokemonCardResponse> cardResponses) {
-        List<BigDecimal> priceList = cardResponses.stream().map(PokemonCardResponse::getPrice).toList();
-
+    protected PriceResponse getPrice(List<BigDecimal> priceList) {
         PriceRequest priceRequest = new PriceRequest().setPriceList(priceList);
 
         Message requestMessage = new Message((new Gson().toJson(priceRequest)).getBytes());
