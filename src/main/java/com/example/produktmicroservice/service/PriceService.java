@@ -1,6 +1,46 @@
 package com.example.produktmicroservice.service;
 
+import com.example.produktmicroservice.dto.PokemonCardResponse;
+import com.example.produktmicroservice.dto.PokemonDeckResponse;
+import com.example.produktmicroservice.dto.PriceRequest;
+import com.example.produktmicroservice.dto.PriceResponse;
+import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+@Slf4j
+@Service
 public class PriceService {
 
-    // Liste filtern, preise an priceProducer geben
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private DirectExchange directExchange;
+    @Value("${routing-key.price}")
+    private String priceKey;
+
+    protected PriceResponse getPrice(List<PokemonCardResponse> cardResponses) {
+        List<BigDecimal> priceList = cardResponses.stream().map(PokemonCardResponse::getPrice).toList();
+
+        PriceRequest priceRequest = new PriceRequest().setPriceList(priceList);
+
+        Message requestMessage = new Message((new Gson().toJson(priceRequest)).getBytes());
+        Message returnMessage = rabbitTemplate.sendAndReceive(directExchange.getName(), priceKey, requestMessage);
+
+        if (returnMessage == null) {
+            log.info("No Price Response");
+            return new PriceResponse().setTotalPrice(BigDecimal.ZERO);
+        }
+
+        return new Gson().fromJson(new String(returnMessage.getBody(), StandardCharsets.UTF_8), PriceResponse.class);
+    }
 }
