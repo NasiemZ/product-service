@@ -1,6 +1,5 @@
 package com.example.produktmicroservice.dto;
 
-import com.example.produktmicroservice.entity.PokemonCard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,6 @@ import java.util.List;
 public class PokemonDeckResponse {
 //    private int id;
     private String name;
-    private List<PokemonCardResponse> pokemonCards;
+    private List<PokemonCardResponse> pokemonCardList;
     private BigDecimal totalPrice;
 }

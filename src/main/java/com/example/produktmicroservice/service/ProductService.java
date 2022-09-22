@@ -6,19 +6,14 @@ import com.example.produktmicroservice.entity.PokemonDeck;
 import com.example.produktmicroservice.repository.PokemonDeckRepository;
 import com.example.produktmicroservice.repository.PokemonCardRepository;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,16 +23,19 @@ public class ProductService {
     private PokemonCardRepository cardRepository;
     @Autowired
     private PokemonDeckRepository cardDeckRepository;
-
     @Autowired
     private PriceService priceService;
 
-    public List<PokemonCard> getPokemonCardList() {
-        return cardRepository.findAll();
+    public List<PokemonCardResponse> getPokemonCardList() {
+        List<PokemonCard> cards = cardRepository.findAll();
+        return cards.stream().map(this::getCardResponse).collect(Collectors.toList());
     }
 
-    public List<PokemonDeck> getPokemonDeckList() {
-        return cardDeckRepository.findAll();
+    public List<PokemonDeckResponse> getPokemonDeckList() {
+        List<PokemonDeck> pokemonDecks = cardDeckRepository.findAll();
+        List<PokemonDeckResponse> deckResponses = pokemonDecks.stream().map(this::getDeckResponse).collect(Collectors.toList());
+
+        return deckResponses;
     }
 
     public PokemonDeckResponse createPokemonDeck(PokemonDeckRequest deckRequest) {
@@ -46,13 +44,14 @@ public class ProductService {
         saveDeckToDatabase(deckRequest.getName(), cardRequests);
 
         List<PokemonCardResponse> cardResponses = getPokemonResponseList(cardRequests);
+        List<BigDecimal> priceList = cardResponses.stream().map(PokemonCardResponse::getPrice).toList();
 
-        PriceResponse priceResponse = priceService.getPrice(cardResponses);
+        PriceResponse priceResponse = priceService.getPrice(priceList);
 
         return new PokemonDeckResponse()
                 .setName(deckRequest.getName())
                 .setTotalPrice(priceResponse.getTotalPrice())
-                .setPokemonCards(cardResponses);
+                .setPokemonCardList(cardResponses);
     }
 
     private List<PokemonCardResponse> getPokemonResponseList(List<PokemonCardRequest> pokemonCardRequests) {
@@ -79,9 +78,23 @@ public class ProductService {
         return response;
     }
 
+    private PokemonDeckResponse getDeckResponse(PokemonDeck pokemonDeck) {
+        List<BigDecimal> cardPrices = pokemonDeck.getPokemonCardList().stream().map(PokemonCard::getPrice).toList();
+        PriceResponse priceResponse = priceService.getPrice(cardPrices);
+
+        List<PokemonCardResponse> cardsOfDeck = pokemonDeck.getPokemonCardList().stream().map(this::getCardResponse).toList();
+
+        PokemonDeckResponse deckResponse = new PokemonDeckResponse()
+                .setName(pokemonDeck.getName())
+                .setPokemonCardList(cardsOfDeck)
+                .setTotalPrice(priceResponse.getTotalPrice());
+
+        return deckResponse;
+    }
+
     private void saveDeckToDatabase(String name, List<PokemonCardRequest> cardRequests) {
         List<Long> ids = cardRequests.stream().map(PokemonCardRequest::getId).toList();
-        var cardList = cardRepository.findAllById(ids);
+        List<PokemonCard> cardList = cardRepository.findAllById(ids);
 
         long newId = UUID.randomUUID().getMostSignificantBits();
 
