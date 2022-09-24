@@ -85,6 +85,7 @@ public class ProductService {
         List<PokemonCardResponse> cardsOfDeck = pokemonDeck.getPokemonCardList().stream().map(this::getCardResponse).toList();
 
         PokemonDeckResponse deckResponse = new PokemonDeckResponse()
+                .setId(pokemonDeck.getId())
                 .setName(pokemonDeck.getName())
                 .setPokemonCardList(cardsOfDeck)
                 .setTotalPrice(priceResponse.getTotalPrice());
