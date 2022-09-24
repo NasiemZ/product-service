@@ -1,7 +1,5 @@
 package com.example.produktmicroservice.service;
 
-import com.example.produktmicroservice.dto.PokemonCardResponse;
-import com.example.produktmicroservice.dto.PokemonDeckResponse;
 import com.example.produktmicroservice.dto.PriceRequest;
 import com.example.produktmicroservice.dto.PriceResponse;
 import com.google.gson.Gson;
@@ -36,7 +34,7 @@ public class PriceService {
 
         if (returnMessage == null) {
             log.info("No Price Response");
-            return new PriceResponse().setTotalPrice(BigDecimal.ZERO);
+            return new PriceResponse().setPrice(BigDecimal.ZERO);
         }
 
         return new Gson().fromJson(new String(returnMessage.getBody(), StandardCharsets.UTF_8), PriceResponse.class);

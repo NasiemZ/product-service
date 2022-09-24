@@ -50,7 +50,7 @@ public class ProductService {
 
         return new PokemonDeckResponse()
                 .setName(deckRequest.getName())
-                .setTotalPrice(priceResponse.getTotalPrice())
+                .setPrice(priceResponse.getPrice())
                 .setPokemonCardList(cardResponses);
     }
 
@@ -88,7 +88,7 @@ public class ProductService {
                 .setId(pokemonDeck.getId())
                 .setName(pokemonDeck.getName())
                 .setPokemonCardList(cardsOfDeck)
-                .setTotalPrice(priceResponse.getTotalPrice());
+                .setPrice(priceResponse.getPrice());
 
         return deckResponse;
     }

@@ -15,6 +15,6 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 public class PriceResponse {
 
-    private BigDecimal totalPrice;
+    private BigDecimal price;
 
 }
