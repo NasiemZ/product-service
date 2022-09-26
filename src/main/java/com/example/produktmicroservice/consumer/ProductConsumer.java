@@ -1,6 +1,7 @@
 package com.example.produktmicroservice.consumer;
 
 import com.example.produktmicroservice.dto.PokemonDeckRequest;
+import com.example.produktmicroservice.service.ExternalService;
 import com.example.produktmicroservice.service.ProductService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,8 @@ public class ProductConsumer {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ExternalService externalService;
 
     @RabbitListener(queues = "${queue.product}")
     public String handleRequest(Message message) {
@@ -32,6 +35,9 @@ public class ProductConsumer {
             case CREATE_DECK -> {
                 var deckRequest = unpackRequest(message);
                 return new Gson().toJson(productService.createPokemonDeck(deckRequest));
+            }
+            case GET_FACT -> {
+                return new Gson().toJson(externalService.getPokemonFact());
             }
             default -> {
                 return "Error: Product Service Request Handler";
