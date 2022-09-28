@@ -27,13 +27,13 @@ public class ProductService {
     private PokemonDeckRepository cardDeckRepository;
     @Autowired
     private PriceService priceService;
+
     @Cacheable("PokemonCardResponse")
     public List<PokemonCardResponse> getPokemonCardList() {
         List<PokemonCard> cards = cardRepository.findAll();
         return cards.stream().map(this::getCardResponse).collect(Collectors.toList());
     }
 
-    @Cacheable("PokemonDeckResponse")
     public List<PokemonDeckResponse> getPokemonDeckList() {
         List<PokemonDeck> pokemonDecks = cardDeckRepository.findAll();
         List<PokemonDeckResponse> deckResponses = pokemonDecks.stream().map(this::getDeckResponse).collect(Collectors.toList());
