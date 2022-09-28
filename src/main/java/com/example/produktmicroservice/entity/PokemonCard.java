@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
@@ -22,7 +24,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "pokemon")
 @JsonPropertyOrder({"id", "name", "description", "hp", "type", "stage", "expansion", "rarity", "number", "illustrator", "price"})
-public class PokemonCard {
+public class PokemonCard implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     private long id;

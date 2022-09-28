@@ -8,13 +8,15 @@ import com.example.produktmicroservice.repository.PokemonCardRepository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+@EnableCaching
 @Service
 @Slf4j
 public class ProductService {
@@ -26,6 +28,7 @@ public class ProductService {
     @Autowired
     private PriceService priceService;
 
+    @Cacheable("PokemonCardResponse")
     public List<PokemonCardResponse> getPokemonCardList() {
         List<PokemonCard> cards = cardRepository.findAll();
         return cards.stream().map(this::getCardResponse).collect(Collectors.toList());

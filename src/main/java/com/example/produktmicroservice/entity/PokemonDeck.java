@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -16,13 +18,13 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 @Table(name = "pokemondeck")
-public class PokemonDeck {
+public class PokemonDeck implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private long id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column
